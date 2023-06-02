@@ -1,10 +1,28 @@
 class PhotosController < ApplicationController 
+  # los controllers por convención se designan en plural y para asociar una ruta a un controller, se puede usar resources :photos (plural)
+
+  before_action :set_photo, only: [:how, :update, :destroy]
   
   def index
     @photos = Photo.all
+
+    flash[:alert] = "Algo salió mal"
+  end
+
+  def show 
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @photo }
+      #por defecto usa html, sino intenta json
+      #si solo queremos responder de forma exitosa, head solo responde encabezado.
+    end 
   end
 
   def new
+    session[:intentos] = session[:intentos] ? session[:intentos] + 1 : 1
+    #si queremos cambiar la vista a la que va, podemos redirigirlo, también se puede utilizar en formato json
+    # render 'new_view'
+    # render json: @photo #retorna un json
   end
 
   # /photos/:id/edit 
@@ -13,33 +31,44 @@ class PhotosController < ApplicationController
   end
 
   def update
-    photo = Photo.find( params[:id] )
-    photo.title = params[:photo][:title]
-    photo.image_url = params[:photo][:image_url]
-
-    photo.save
+    @photo.update(photo_params)
+    redirect_to @photo
   end
-
-  def show 
-    @photo = Photo.find(params[:id])
-  end 
 
   def create
-    photo = Photo.new
-    photo.title = params[:photo][:title]
-    photo.image_url = params[:photo][:image_url]
-    photo.save
-
-    redirect_to "/photos/#{photo_id}"
-    # también podemos pasar directamente el obj "photo" 
+    @photo = Photo.new(photo_params)
+    
+    respond_to do |format| 
+      if @photo.save
+        format.html { redirect_to @photo, notice: "Todo salió bien" }
+        format.json { render json: @photo, status: :created }
+      else
+        format.html { redirect_to photos_path, notice: 'Algo falló' }
+      end
+    end
   end
+
+    #por defecto usa html, sino intenta json
+    # redirect_to "/photos/#{photo_id}"
+    # también podemos pasar directamente el obj "photo"
 
   #DELETE /photos/:id
   def destroy
-    photo = Photo.find(params[:id])
-    photo.destroy
+    @photo.destroy
+    respond_to do |format|
+      format.html {redirect_to "/photos"}
+      format.json {head :no_content}
+    end
+  end
 
-    redirect_to '/photos'
+  private
+
+  def set_photo
+      @photo = Photo.find(params[:id])
+  end
+
+  def photo_params
+    params.require(:photo).permit(:title, :image_url)
   end
 
 end
