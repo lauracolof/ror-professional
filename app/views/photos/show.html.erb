@@ -1,9 +1,12 @@
 
   <div>
-    <h2> 
-    <%= @photo.title %> 
+    <h2>  <%= @photo.title %> </h2>
     <%# con @ porque viene desde el controller en show  %>
-    <%= image_tag 'photo.image_url' %>
+    <%= image_tag "photo.image_url" %>
     <%# imagetag es útil y utilizada cuando tengamos una carpeta images y quieramos mostrar esass. cuando deseamos consultar un registro individual sería /photo/{:id} %>
-    </h2>
+    <div>
+      <%= link_to 'Edit', "/photos/#{@photo.id}/edit"  %>
+      <% link_to 'Delete', @photo, method: :delete %>
+      <%# Los links de html siempre generan peticiones GET, y no otro, entonces utiliza AJAX, para sustituir esta petición y convertirla en otro método %>
+    </div>
   </div>

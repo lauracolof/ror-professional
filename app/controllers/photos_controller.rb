@@ -30,8 +30,16 @@ class PhotosController < ApplicationController
     photo.image_url = params[:photo][:image_url]
     photo.save
 
-    redirect_to '/photos/#{photo_id}'
+    redirect_to "/photos/#{photo_id}"
     # también podemos pasar directamente el obj "photo" 
+  end
+
+  #DELETE /photos/:id
+  def destroy
+    photo = Photo.find(params[:id])
+    photo.destroy
+
+    redirect_to '/photos'
   end
 
 end
