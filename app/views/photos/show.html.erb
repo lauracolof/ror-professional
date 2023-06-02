@@ -1,11 +1,9 @@
-<h1> Photos </h1>
 
-<%= @photos.each do |photo| %>
   <div>
-    <h2> <%= photo.title %>
+    <h2> 
+    <%= @photo.title %> 
+    <%# con @ porque viene desde el controller en show  %>
     <%= image_tag 'photo.image_url' %>
     <%# imagetag es útil y utilizada cuando tengamos una carpeta images y quieramos mostrar esass. cuando deseamos consultar un registro individual sería /photo/{:id} %>
-    <%= <%= link_to  "See more", photo %>%>
     </h2>
   </div>
-<%end%>
