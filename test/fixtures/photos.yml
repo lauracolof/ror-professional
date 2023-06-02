@@ -1,0 +1,18 @@
+# == Schema Information
+#
+# Table name: photos
+#
+#  id         :integer          not null, primary key
+#  image_url  :string
+#  title      :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+one:
+  title: MyString
+  image_url: MyString
+
+two:
+  title: MyString
+  image_url: MyString
