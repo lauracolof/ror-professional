@@ -1,3 +1,8 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  get "/hello", to: "main#hello"
+  root to 'main#hello'
+
+  get '/greeting', to: "main#hello"
+  post '/greetings', to: "main#hello"
+
 end
