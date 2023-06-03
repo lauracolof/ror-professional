@@ -5,7 +5,8 @@
     <%= image_tag "photo.image_url" %>
     <%# imagetag es útil y utilizada cuando tengamos una carpeta images y quieramos mostrar esass. cuando deseamos consultar un registro individual sería /photo/{:id} %>
     <div>
-      <%= link_to 'Edit', "/photos/#{@photo.id}/edit"  %>
+      <%= link_to 'Edit', edit_photo_path(@photo.id)  %>
+      <%# se puede enviar con o sin id %>
       <% link_to 'Delete', @photo, method: :delete %>
       <%# Los links de html siempre generan peticiones GET, y no otro, entonces utiliza AJAX, para sustituir esta petición y convertirla en otro método %>
     </div>

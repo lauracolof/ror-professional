@@ -1,5 +1,5 @@
 <p>Intentos: <%= session[:intentos] %> </p>
-<form action="/photos" method="post">
+<form action=<%= photos_path %>  method="post">
   <%= hidden_field_tag :authenticity_token, form_authenticoty_token %>
 
     <div>
