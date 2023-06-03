@@ -68,7 +68,8 @@ class PhotosController < ApplicationController
   end
 
   def photo_params
-    params.require(:photo).permit(:title, :image_url)
+    params.require(:photo).permit(:title, :image_url, :todo_id, tag_ids: [])
+    # los pararms con arreglos tienen que ir al final siempre, no puede haber otra opción después.
   end
 
 end

@@ -1,16 +1,26 @@
 <p>Intentos: <%= session[:intentos] %> </p>
-<form action=<%= photos_path %>  method="post">
-  <%= hidden_field_tag :authenticity_token, form_authenticoty_token %>
 
-    <div>
-      <label for="title"> Title</label>
-      <input type="text" name="photo[title]" id="title">
-    </div>
-    <div>
-      <label for="image_url"> Image URL</label>
-      <input type="url" name="photo[image_url]" id="image_url">
-    </div>
+<%= form_with model: @photo do |form| %>
 
-  <input type="submit" value="Send">
+  <div>
+  <%= form.label :title %>
+  <%= form.text_field :title %>
+  </div>
 
-</form>
+  <div>
+    <%= form.check_box :is_public %>
+  </div>
+
+  <div>
+    <%= form.collection_select(:todo_id, Todo.all, :id, :title, {include_blank: true}) %>
+  </div>
+
+  <div>
+  <%= form.label :image_url %>
+  <%= formf.url_field :image_url %>
+  </div>
+
+  <%= formf.submit "Submit" %>
+  
+<% end %>
+  
