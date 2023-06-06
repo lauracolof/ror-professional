@@ -1,5 +1,6 @@
-# CARPETAS PRINCIPALES
+# Personal notes
 
+## CARPETAS PRINCIPALES
 APP:
 Models,
 View,
@@ -20,7 +21,7 @@ PUBLIC: contiene todos los arch publicos del proyecto y todos pueden ser accedid
 
 STORAGE: archivos por defecto que subamos a la app utilizando el modelo de rails
 
-# ARQUITECTURA MVC:
+## ARQUITECTURA MVC:
 
 Base del framework. Identificamos tres tipos de archivos:
 
@@ -28,11 +29,11 @@ Base del framework. Identificamos tres tipos de archivos:
 - Views, el módulo de rails para trabajar con vistas se llama **Action View** : contiene muchas características interesantes como manejo de layouts, vistas parciales y motor de vistas para embeber código de ruby, lo que permite mostrar la info en la app.
 - Controllers, conector entre los datps y su representación en vistas. Reciben peticiones y visitas de parte de los usuarios, y dan respuestas a estas peticiones. Utilizan los modelos para consultar datos y las vistas para mostrar las representaciones de estos datos. Manejados a través de **Action Controllers**, que provee convenciones y caract. para trabajar.
 
-# Convencion sobre configuración.
+## Convencion sobre configuración.
 
 Por convencion, los que fueron formados con decisiones que fuerno tomadas desde el diseño del framework, como se usa, como se establecen archivos, se basa en convenciones de trabajo. Hay que colocar el mismo nombre de una vista a un controlador, el nomnbre de una tabla es el plural y el singular es el nombre del modelo.
 
-# PASOS PARA DAR RESPUESTA
+### PASOS PARA DAR RESPUESTA
 
 - routes.rb, le pasamos el controlador y acción va a responder: En las rutas nosotros declaramos qué recurso es manejado por cuál controlador, de manera que una vez que encuentra el controlador definido para la ruta correspondiente, la solicitud pasa hacia el controlador.
 
@@ -55,7 +56,7 @@ end
 <h1>Hola Mundo</h1>
 ```
 
-# ERB
+## ERB
 
 Provee una manera facil pero poderosa para agregar sistema de templates para Ruby, viene implementado con ruby. Sistemas que requieran embeber código de ruby con un archivo de texto plano. No es exclusivo con html. Nos permite generar información y agregar estructuras del control de flujos como ciclos. Operadores para embeber código:
 <% if true %> # no imprime resultado
@@ -63,12 +64,12 @@ Provee una manera facil pero poderosa para agregar sistema de templates para Rub
 <% end %> se corta con end
 Si hacemos una impresión como números con un ciclo, no necesitamos necesariamente que se imprima el mismo ciclo.
 
-# ROUTES
+## ROUTES
 
 get "/courses/free", to: ""
 sin decirle que controller usará, rails usará la primer parte del path "courses", será el controlador, y la segunda "free" es el método o la acción que dará respuesta. Por convención rails buscará courses/controller y dentro, deberá existir un método que se llame free. Si el controller no cumpla la convención, podemos utilizar "to: "courses#index", para decir que tenemos un controlador courses y un método index que resolverán la petición courses. Y buscará un archivo que será "courses_controllers" y dentro una clase "CoursesController" que defina index.
 
-# Main route
+### Main route
 
 Se define utilizando el método **root** en routes. que recibe un hash de config y cno el que podemos utilizar to: también. Esto nos lleva a la ruta base sin /path, pero redirecciona a lo que establezcamos.
 
@@ -76,7 +77,7 @@ Se define utilizando el método **root** en routes. que recibe un hash de config
 root to: "main#welcome"
 ```
 
-# HELPERS
+## HELPERS
 
 Métodos donde podemos definir métodos para utilizar en vistas o templates. Método para definir un link. Definimos como primer argumento lo que va a ir en vistas, y como segundo el path al que dirige el link.
 
@@ -87,18 +88,18 @@ Métodos donde podemos definir métodos para utilizar en vistas o templates. Mé
 También tenemos métodos que definen las rutas, las rutas que definimos tienen otro nombre, root, es la base, root_path es la que establezcamos. Root url entrega el dominio.
 <%= link to "Inicio, "/" root_path %>
 
-# FORMS IN RAILS
+## FORMS IN RAILS
 
 Especiales por contar con más de una protección de seguridad, para los ataques web mas comunes, y por ofrecer métodos para las vistas que permiten generar form y controllers mas ordenados y mantenibles.
 
-# PARAMS
+## PARAMS
 
 A través de donde podemos leer data de un form, colocados como ?params=. Los que vienen de una url, son los query_params y los que vienen en el cuerpo de una petición, y dependen del método http. Si es GET, vendran en la url, si es tipo POST, vendran ocultos en el body. De todas formas, siempre están didsponibles via obj params.
 Para acceder a la prop params:
 {"Authenticity_token"=>"[FILTERED]","name"=>"Laura","commit"=>"Enviar"}
 accedemos con simbolos [:name] o strings['name'] y podemos guardarlo en variable de clase con @variable = params... y queda disponible en las vistas.
 
-# Diferentes generadores de código del framework
+## Diferentes generadores de código del framework
 
 Producen la estructura base de elementos como controllers, views, migrations, etc.
 **rails generate controller Example** // generador del controller "Example" y opcional acciones, como "demo". Agrega: agrega rutas, vistas para demo, pruebas unitarias y style
@@ -107,7 +108,7 @@ Producen la estructura base de elementos como controllers, views, migrations, et
 **rails generate model Todo title:string** //primer letra en mayus y singular, crea un nuevo modelo y una migración para la tabla de ese modelo
 **rails test test/models/todo_test.rb** // Para ejecutar los archivos de pruebas: rails test /archivo.
 
-# MIGRACIONES
+## MIGRACIONES
 
 Comúnmente conocidas como migraciones de esquema, decimos que una migración es como se conoce a los cambios incrementales y reversibles al esquema de la base de datos, éste tipo de archivos describen cambios al esquema que se pueden ejecutar de uno en uno, por lo que los llamamos incrementales, y que al mismo tiempo pueden ser revertidos.
 En Rails, las migraciones residen en la carpeta migrations dentro de la carpeta db, que al mismo tiempo contiene otros archivos relacionados a la base de datos, o incluso la base de datos misma. Cada migración se almacena en un archivo distinto, cuyo nombre se compone de dos elementos: un texto descriptivo del cambio y la fecha en que fue generada la migración, en formato de timestamp.
@@ -116,13 +117,13 @@ Como parte de nuestra base de datos, Rails genera una tabla especial de nombre m
 En un entorno de desarrollo, Rails reportará al ejecutar el proyecto que hay migraciones pendientes por realizar, para que todas las personas involucradas en el proyecto, sepan que hay nuevos cambios. Al mismo tiempo, gracias a que los archivos describen las modificaciones, no es necesario que cada persona en el equipo sepa cómo realizar los cambios, basta con ejecutar el comando de ejecución de migraciones, y éstos se realizarán.
 También importante, es que en caso de que una migración haya ejecutado un cambio contraproducente, puede ser revertido con un comando, a través de la utilidad de terminal de Rails.
 
-# MODELOS
+## MODELOS
 
 Estructuras con los datos y la lógica para procesarlos, también son quienes nos comunican con la DB. Acá reside la lógica de negocio, que determinan como se almacenan y cambian los datos. También pueden existir modelos que no estén asociados a una tabla.
 
 ---
 
-# UNITARY TEST
+## UNITARY TEST
 
 Las pruebas unitarias nos ayudan en muchos aspectos, tales como:
 
@@ -140,13 +141,13 @@ Las pruebas unitarias nos ayudan en muchos aspectos, tales como:
   Decimos que una prueba pasa, cuando la afirmación de la prueba se cumple, así mismo, decimos que una prueba falla cuando la afirmación de la prueba no se cumple.
   Para escribir pruebas, Rails viene preconfigurado con un framework de pruebas: MiniTest. Aunque cubrir a fondo este framework requeriría un curso propio, vamos a aprender los fundamentos del uso y la sintaxis para la redacción de pruebas en nuestra aplicación, de esta manera nos aseguraremos de que el código funciona correctamente, sin tener que probarlo manualmente.
 
-# VALIDATIONS
+## VALIDATIONS
 
 RoR a través del Active_record, provee una serie de validaciones predefinidas y apis que permiten personalizarlas. Las validaciones se escriben en los métodos, en cada campo.
 Si no hay fallas al ejecutar la prueba debería retornar algo como:
 1 runs, 1 assertions, 0 failures, 0 errors, 0 skips
 
-# ACTIVE RECORD
+## ACTIVE RECORD
 
 "Una fila de la Db representada por un obj, al que se le añade lógica del negocio, haciendo que tenga acceso directo a los datos en la tabla, además de operaciones de negocios sobre dichos datos."
 Es la M del MVC, capa que nos permite comunicarnos a través de obj con acceso a la DB, implementación de ORM, representación en que los datos se representan con objetos. Se asegura que la comunicación con la DB se haga utilizando clases y obj, en lugar de SQL.
@@ -181,9 +182,10 @@ Todas las consultas generadas en **rails console**, deben ser guardadas o se per
 - "todo.update" actualiza el anterior pasandole el hash.
 - "todo.destroy" elimina un registro
 
-# SCAFFOLF
+## SCAFFOLF
 
-Herramientas con las que podemos generar a la vez, vistas, controllador, modelo de una tabla en uno. **rails generate scaffold Tweet body:text** genera todas las apps de CRUD para un registro:
+Herramientas con las que podemos generar a la vez, vistas, controllador, modelo de una tabla en uno. 
+**rails generate scaffold Tweet body:text** genera todas las apps de CRUD para un registro:
 invoke active_record
 create db/migrate/20230602182004_create_tweets.rb
 create app/models/tweet.rb
@@ -206,7 +208,7 @@ invoke scss
 create app/assets/stylesheets/scaffolds.scss
 Para que eso surga efecto sobre la tabla debemos utilizar el comando **rails db:migrate**
 
-# VERBOS HTTP Y REST
+## VERBOS HTTP Y REST
 
 Estas son algunas reglas que te servirán para saber cómo y cuándo debes usar los verbos Http en una arquitectura REST.
 
@@ -250,24 +252,24 @@ DELETE /cursos
 
 Esta es la manera a través de la que usamos los verbos Http en una aplicación web. Estos en combinación con las URIs proveen la interfaz uniforme de la que hablamos cuando discutimos las características de un sistema REST.
 
-# ANOTATE
+## ANOTATE
 
 Dependencia adicional, que permite utilizar el comando "anotate", _bundle exec annotate --model_ . Debemos pasarle la bander a --model y lo que hace es la info del schema de dicha tabla para generar los modelos y sirve para consultar los datos
 **gem 'annotate'** y luego _bundle install_
 También viene con un comando para no ejecutarla constantemente. **rails generate annotate:install** y automáticamente cada vez que generamos una migración se anotarán los datos del model.
 
-# COOKIES Y SESSION
+## COOKIES Y SESSION
 
 Cookies se guardan en el cliente (navegador). Para asignar una cookie se puede utilizar el obj cookie y para leerla se puede obtener al leer. En cada petición al servidor se pueden usar, todas son encryptada por rails. y sólo pueden ser accedidas por rails. El valor tmb se encuentra encryptado en credentials. Se pueden modificar pero no es recomendable. Si ejecutamos **rails secret** nos entrega el secreto.
 
 Las sesiones en el servidor y un identificador único es en el navegador como una cookie. Pero busca en el servidor..
 En session es muy similar al funcionamiento de las cookies.
 
-# MENSAJE FLASH
+## MENSAJE FLASH
 
 Forma de comunicarnos entre acciones de un controlador. Se asignan a un hash flash y serán expuestos en la siguiente acción que el framework ejecute. Son muy buenos para comunicar información en un redireccionamiento. Sólo aceptan strings, arrays y otros hash. Para guardar un mensaje flash podemos utilizar el método flash, asignarlo a una clave arbitraria. Rails expone dos helpers en la vist para acceder específicamente a los flash, específicamente alert y notice. Que pueden enviar un mensaje antes del redireccionamiento. Por ejemplo: Todo ok, o failure. Por defecto no se muestra, hay que agregarlos a la vista. (layout/body). Y se muestra en el caso de que exista. Son para la siguiente acción del controlador que se ejecute.
 
-# CONCERNS
+## CONCERNS
 
 Son como módulos. Las funciones de los concerns es hacerlo más legible. Cualquier método que se crea para poder compartir en otra parte del código, pero no se puede utilizar por si mismo. Ni se hereda.
 
@@ -290,7 +292,7 @@ class ClassExample
 end
 ```
 
-# METODOS ASOCIADOS A RUTAS
+## METODOS ASOCIADOS A RUTAS
 
 Es buena práctica utilizar helpers de rutas en lugar de colocar strings de las rutas cuando trabajamos en las vistas. Nos evita además tener que cambiar en cada lugar donde se llame a la ruta. Fomenta el principio de separación de responsabilidades.
 
@@ -307,7 +309,7 @@ photos_path => /photos
 nombre_url # returna una ruta absoluta que incluye el dominio
 photos_url => localhost:3000/photos
 
-# BLOQUES
+## BLOQUES
 
 Active Record: Modelo, sería como el api del active_record, una de las más importantes de rails y de los más utilizados.
 Los modelos son lo más imporatnte de la app, el termino con los que definimos los procesos que asemejan al negocio. Los modelos contienen para lo que está diseñada la información.
@@ -324,7 +326,7 @@ STRING:
 **Photo.where("title is NULL")** #Todos los registros diferentes a demo.
 **Photo.where("title is NULL")** #Todos los registros diferentes a demo.
 
-# OPERADORES
+## OPERADORES
 
 AND **Photo.where("title IS NOT NULL OR image_url IS NOT NULL")**
 OR **Photo.where(title:"Demo v2").or(Photo.where(image_url:"some.jpg") )**
@@ -334,15 +336,15 @@ NOT **Photo.where.not(title: ["demo", "demo v2"])**
 Version >> 6 preferentemente pasarlas consultas individual
 NOT **Photo.where.not(title: "").where.not(image_url: "")**
 
-# PAGINACIÓN
+## PAGINACIÓN
 
 Práctica común en los resultados que obtenemos de tablas. Especialmente útiles en tablas con muchos registros donde cargar toda la tabla en una sola operación puede ser contraproducente en tiempos de respuesta y memoria utilizada.
 
-# SCOPE
+## SCOPE
 
 son métodos de clase pensados para ser encadenados y siempre deben retornar una relación, el primer argumento es el método para el scope, el segundo es una estructura de ruby Proc, la sintaxis es una -> con un bloque de código y podemos pedir por ejemplo un orden descendente.
 
-# VALIDACIONES
+## VALIDACIONES
 
 Predefinidas: las que vienen implementadas, y solo necesitamos declarar su uso en el modelo, built-in. Permiten definir multiples validaciones en una sola declaración. Pueden recibir procs para agregarle lógica adicional a las validaciones.
 **uniqueness: {message: -> (object,data){"%{value} ya fue usado para #{object.image_url}%"}}** retornaría
@@ -362,7 +364,7 @@ class Todo < ApplicationRecord
 end
 ```
 
-# CALLBACKS
+## CALLBACKS
 
 Métodos que se ejecutan antes, durante o después de la creación, actualización o eliminación de un obj. Existen más de 16 callbacks. After_create por ejemplo se puede usar después de crear un posteo.
 
